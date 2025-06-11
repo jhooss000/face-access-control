@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Iniciar sesión{% endblock %}
+{% block content %}
+<h2>Iniciar sesión</h2>
+<form method="POST" class="mt-3">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.password.label(class="form-label") }}
+        {{ form.password(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+    <p>¿No tienes cuenta? <a href="{{ url_for('web_routes.register') }}">Regístrate aquí</a></p>
+</form>
+{% endblock %}
+

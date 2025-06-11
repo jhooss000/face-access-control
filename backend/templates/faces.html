@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block title %}Gestión de Rostros{% endblock %}
+{% block content %}
+
+<a href="{{ url_for('web_routes.index') }}" class="btn btn-secondary mb-3">⬅ Volver al panel principal</a>
+
+<!-- SUBIR NUEVO ROSTRO -->
+<h2>Subir nuevo rostro</h2>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.person_name.label(class="form-label") }}
+        {{ form.person_name(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.image.label(class="form-label") }}
+        {{ form.image(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+</form>
+
+<hr class="my-5">
+
+<!-- VERIFICAR ROSTRO -->
+<h2>Verificar un rostro desde imagen</h2>
+<form method="POST" enctype="multipart/form-data">
+    {{ verify_form.hidden_tag() }}
+    <div class="mb-3">
+        {{ verify_form.image.label(class="form-label") }}
+        {{ verify_form.image(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ verify_form.submit(class="btn btn-success") }}
+    </div>
+</form>
+
+{% if match_name %}
+<div class="alert alert-success mt-4">
+    ✅ Rostro identificado como: <strong>{{ match_name }}</strong>
+</div>
+{% elif no_match %}
+<div class="alert alert-warning mt-4">
+    ⚠️ Ninguna coincidencia encontrada.
+</div>
+{% endif %}
+
+<hr class="my-5">
+
+<!-- LISTA DE ROSTROS -->
+<h3>Rostros subidos por ti:</h3>
+<div class="row">
+    {% for face in faces %}
+    <div class="col-md-3 col-sm-4 col-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <img src="{{ url_for('static', filename='registered_faces/' ~ face.filename) }}" class="card-img-top" style="height: 180px; object-fit: cover;">
+            <div class="card-body text-center">
+                <strong>{{ face.person_name }}</strong>
+                <form method="POST" action="{{ url_for('web_routes.delete_face', face_id=face.id) }}" class="mt-2">
+                    <button class="btn btn-sm btn-danger w-100" onclick="return confirm('¿Eliminar este rostro?')">🗑️ Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-4 mb-3">👋 Bienvenido al Sistema de Control de Acceso Facial</h1>
+    <p class="lead">Desde aquí puedes gestionar rostros, verificar accesos y controlar el sistema de entrada de la fábrica.</p>
+
+    <hr class="my-4">
+
+    <div class="d-grid gap-2 col-6 mx-auto mt-4">
+        <a href="{{ url_for('web_routes.manage_faces') }}" class="btn btn-primary btn-lg">📂 Gestionar Rostros</a>
+        <a href="{{ url_for('web_routes.logout') }}" class="btn btn-outline-danger btn-lg">🔒 Cerrar Sesión</a>
+    </div>
+</div>
+{% endblock %}
+
